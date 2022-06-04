@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class ThreadManager implements Runnable {
 
@@ -14,8 +15,11 @@ public class ThreadManager implements Runnable {
         this.outputFileName = outputFileName;
     }
 
+
     @Override
     public void run() {
+
+        FileManager fileManager = new FileManager();
 
         try {
             File file = new File(threadFileName);
@@ -34,7 +38,11 @@ public class ThreadManager implements Runnable {
                 {
                    for (String w : this.words) {
                        if (w.equals(word)){
-                           System.out.println("in " + Thread.currentThread().getId() + " ,fileName : " + threadFileName + " ,find word " + w + " in line " + line);
+                           String message = "in " + Thread.currentThread().getId() +
+                                   " ,fileName : " + threadFileName + " ,find word "
+                                   + w + " in line " + line + "\n";
+                           System.out.print(message);
+                           fileManager.writeResultToFile(message);
                        }
                    }
 

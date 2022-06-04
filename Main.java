@@ -12,36 +12,13 @@ public class Main {
         ArrayList<String> files = fileManager.fileSplitter();
         String[] words = fileManager.createWordsArray();
 
-        for (int i = 1; i < 5; i++) {
+        ArrayList<String> test = new ArrayList<>();
+
+        for (int i = 1; i < threads + 1; i++) {
             String fileName = "file" + "_" + i;
             new Thread(new ThreadManager(words, fileName,"result.txt")).start();
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//        int n = 8; // Number of threads
-//        for (int i = 0; i < n; i++) {
-//            MThread object
-//                    = new MThread();
-//            object.start();
-//        }
     }
-
-
-
-
-
-
 }

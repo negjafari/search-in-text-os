@@ -12,6 +12,10 @@ public class FileManager {
 
     private String wordsFileName;
 
+    public FileManager(){
+
+    }
+
     public FileManager(int filesNumber) {
         this.filesNumber = filesNumber;
     }
@@ -84,7 +88,6 @@ public class FileManager {
         return files;
     }
 
-
     public int createOutputFile() {
         try {
             File output = new File(outputFileName + ".txt");
@@ -125,6 +128,21 @@ public class FileManager {
 
 
         return words;
+    }
+
+    public void writeResultToFile(String message){
+
+        try {
+            FileWriter fWriter = new FileWriter(outputFileName + ".txt", true);
+            fWriter.write(message);
+            fWriter.close();
+
+        }
+
+        catch (IOException e) {
+
+            System.out.print(e.getMessage());
+        }
     }
 }
 
