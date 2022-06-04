@@ -1,0 +1,9 @@
+Evaluation function f(n) = h(n)
+h(n): heuristic function
+h(n): estimated cost of the cheapest path from node n to goal node.
+If n is goal then h(n)=0
+Greedy best-first search expands the node that appears to be closest to goal
+Example: hSLD(n) = straight-line distance from n to Bucharest
+General approach of informed search:
+Best-first search: node is selected for expansion based on an evaluation function f(n)
+Evaluation functi

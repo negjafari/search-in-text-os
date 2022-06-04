@@ -1,0 +1,9 @@
+[problem] applied to STATE[node] succeedsthen return SOLUTION(node)
+fringe  INSERT-ALL(EXPAND(node, problem), fringe)
+Recall that the ordering of fringe defines the search strategy
+Best-known form of best-first search.
+Idea: avoid expanding paths that are already expensive.
+Evaluation function f(n)=g(n) + h(n)
+g(n) the cost (so far) to reach the node.
+h(n) estimated cost to get from the node to the goal.
+f(n) estimated tota
