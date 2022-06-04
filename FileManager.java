@@ -1,7 +1,4 @@
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,6 +6,8 @@ public class FileManager {
 
     private String sourceFileName;
     private String NewFilesName = "file";
+
+    private String outputFileName = "result";
     private int filesNumber;
 
     private String wordsFileName;
@@ -17,7 +16,7 @@ public class FileManager {
         this.filesNumber = filesNumber;
     }
 
-    public void getInputFiles(){
+    public void getInputFiles() {
 
         Scanner sc = new Scanner(System.in);
 
@@ -39,35 +38,35 @@ public class FileManager {
             System.out.println("Word's file size in bytes " + wordsFile.length());
         }
 
+        int result = createOutputFile();
 
     }
 
     public ArrayList<String> fileSplitter() {
 
-        int index=1;
+        int index = 1;
 
         ArrayList<String> files = new ArrayList<>();
 
         File f = new File(sourceFileName);
 
-        int size =  (int) (f.length()/(filesNumber));
+        int size = (int) (f.length() / (filesNumber));
 
         byte[] buffer = new byte[size];
 
         try (BufferedInputStream bis = new BufferedInputStream(
-                new FileInputStream(f))){
+                new FileInputStream(f))) {
             int tmp = 0;
             while ((tmp = bis.read(buffer)) > 0) {
                 //write each chunk of data into separate file with different number in name
 
-                if(index == filesNumber+1){
-                    int j = index-1;
-                    try (FileOutputStream out = new FileOutputStream(NewFilesName+"_"+j, true)) {
+                if (index == filesNumber + 1) {
+                    int j = index - 1;
+                    try (FileOutputStream out = new FileOutputStream(NewFilesName + "_" + j, true)) {
                         out.write(buffer, 0, tmp);//tmp is chunk size
                     }
-                }
-                else {
-                    String path = NewFilesName+"_"+index;
+                } else {
+                    String path = NewFilesName + "_" + index;
                     File newFile = new File(path);
                     files.add(path);
                     try (FileOutputStream out = new FileOutputStream(newFile)) {
@@ -78,8 +77,7 @@ public class FileManager {
 
 
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -87,5 +85,46 @@ public class FileManager {
     }
 
 
+    public int createOutputFile() {
+        try {
+            File output = new File(outputFileName + ".txt");
+            if (output.createNewFile()) {
+                System.out.println("Output file created ... " + output.getName());
+                return 1;
+            }
+        } catch (IOException e) {
+            System.out.println("Error creating output file ... ");
+            e.printStackTrace();
+            return 0;
 
+        }
+        return 0;
+    }
+
+    public String[] createWordsArray() {
+
+        String[] words = null;
+
+        try{
+            File file = new File(this.wordsFileName);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+
+
+            while((line=bufferedReader.readLine())!=null)
+            {
+                words=line.split(" ");
+            }
+
+            fileReader.close();
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+
+
+        return words;
+    }
 }
+

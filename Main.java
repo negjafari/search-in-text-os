@@ -3,28 +3,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-class MThread extends Thread {
-
-    public MThread() {
-
-    }
-
-    public void run()
-    {
-        try {
-            // Displaying the thread that is running
-            System.out.println(
-                    "Thread " + Thread.currentThread().getId()
-                            + " is running");
-        }
-        catch (Exception e) {
-            // Throwing an exception
-            System.out.println("Exception is caught");
-        }
-    }
-}
-
-// Main Class
 public class Main {
     public static void main(String[] args) {
 
@@ -32,10 +10,16 @@ public class Main {
         FileManager fileManager = new FileManager(threads);
         fileManager.getInputFiles();
         ArrayList<String> files = fileManager.fileSplitter();
+        String[] words = fileManager.createWordsArray();
 
-//        for (String s : list) {
-//            System.out.println(s);
-//        }
+        for (int i = 1; i < 5; i++) {
+            String fileName = "file" + "_" + i;
+            new Thread(new ThreadManager(words, fileName,"result.txt")).start();
+        }
+
+
+
+
 
 
 
