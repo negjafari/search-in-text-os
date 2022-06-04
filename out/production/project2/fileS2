@@ -1,9 +1,0 @@
-on: estimate of desirability
-Usually is an estimated cost or distance 
-Choose node which appears best
-Implementation:
-fringe is queue sorted in decreasing order of desirability.
-Special cases: greedy search, A* search
-function TREE-SEARCH(problem,fringe) return a solution or failurefringe  INSERT(
-MAKE-NODE(INITIAL-STATE[problem]), fringe)loop doif EMPTY?(fringe) then return failurenode  REMOVE-FIRST(fringe)
-if GOAL-TEST

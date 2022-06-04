@@ -1,5 +1,0 @@
-l cost of path through n to goal. 
-A heuristic h(n) is admissible if for every node n,    h(n) ≤ h*(n), where h*(n) is the true cost to reach the goal state from n.
-An admissible heuristic never overestimates the cost to reach the goal, i.e., it is optimistic
-Example: hSLD(n) (never overestimates the actual road distance)
-Theorem: If h(n) is admissible, A* using TREE-SEARCH is optimalhey there i fucking hate working with files
