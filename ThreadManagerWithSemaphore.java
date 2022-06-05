@@ -18,10 +18,9 @@ public class ThreadManagerWithSemaphore extends Thread {
         this.outputFileName = outputFileName;
     }
 
-    public ThreadManagerWithSemaphore(String[] words , String outputFileName, String threadFileName ,Semaphore semaphore) {
+    public ThreadManagerWithSemaphore(String[] words , String outputFileName ,Semaphore semaphore) {
         this.words = words;
         this.outputFileName = outputFileName;
-        this.threadFileName = threadFileName;
         this.semaphore = semaphore;
     }
 
@@ -32,7 +31,6 @@ public class ThreadManagerWithSemaphore extends Thread {
         FileManager fileManager = new FileManager();
 
         try {
-            //File file = new File(threadFileName);
             File file = new File(Thread.currentThread().getName());
             String[] fileWords = null;
             FileReader fileReader = new FileReader(file);
