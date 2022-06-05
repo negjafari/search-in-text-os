@@ -27,7 +27,6 @@ public class ThreadManager implements Runnable {
         FileManager fileManager = new FileManager();
 
         try {
-            //File file = new File(threadFileName);
             File file = new File(Thread.currentThread().getName());
             String[] fileWords = null;
             FileReader fileReader = new FileReader(file);

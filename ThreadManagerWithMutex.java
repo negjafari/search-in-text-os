@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ThreadManagerWithMutex implements Runnable {
@@ -46,10 +47,17 @@ public class ThreadManagerWithMutex implements Runnable {
                 {
                     for (String w : this.words) {
                         if (w.equals(word)){
+                            LocalTime time1 = LocalTime.now();
 
-                            String message = "in " + Thread.currentThread().getName() + "-" + Thread.currentThread().getId() +
-                                    " ,fileName : " + Thread.currentThread().getName() + " ,find word " + "|"
-                                    + w  + "|" + " in line " + line + " at time " + java.time.LocalTime.now() + "\n";
+                            //int lineInInput = fileManager.setFoundedLine(line, Thread.currentThread().getName());
+
+                            LocalTime time2 = LocalTime.now();
+
+                            String message = "find word " + "|" +  w + "|" + " in line "
+                                    + line + " by " + Thread.currentThread().getName()
+                                    + " with ID " + Thread.currentThread().getId()
+                                    + " at time " + time1 + " write in output file at time " + time2 + "\n";
+
                             fileManager.WriteResultToFileWithMutex(message);
                         }
                     }

@@ -18,6 +18,8 @@ public class FileManager {
     private String outputFileName = "result";
     private int filesNumber;
 
+    private ArrayList<Integer> fileLines = new ArrayList<>();
+
     private String wordsFileName;
 
     public FileManager(){
@@ -54,7 +56,7 @@ public class FileManager {
 
     }
 
-    public ArrayList<String> fileSplitter() {
+    public ArrayList<Integer> fileSplitter() {
 
         int index = 1;
 
@@ -93,7 +95,16 @@ public class FileManager {
             System.out.println(e);
         }
 
-        return files;
+        for(int i=0 ; i<filesNumber ; i++){
+            String fileName = files.get(i);
+            int line = fileLines(fileName);
+            fileLines.add(line);
+        }
+
+
+
+
+        return fileLines;
     }
 
     public int createOutputFile() {
@@ -138,21 +149,6 @@ public class FileManager {
         return words;
     }
 
-    public void writeResultToFile(String message){
-
-        try {
-            FileWriter fWriter = new FileWriter(outputFileName + ".txt", true);
-            fWriter.write(message);
-            fWriter.close();
-
-        }
-
-        catch (IOException e) {
-
-            System.out.print(e.getMessage());
-        }
-    }
-
     public void WriteResultToFileWithMutex(String message) {
         mutex.lock();
         try {
@@ -166,5 +162,56 @@ public class FileManager {
             mutex.unlock();
         }
     }
+
+    public void WriteResultToFileWithSemaphore(String message) {
+        try {
+            FileWriter fWriter = new FileWriter(outputFileName + ".txt", true);
+            fWriter.write(message);
+            fWriter.close();
+        }
+
+        catch (IOException e) {
+
+            System.out.print(e.getMessage());
+        }
+    }
+
+    public int fileLines(String fileName) {
+        int line = 0 ;
+
+        try{
+            File file = new File(fileName);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String str;
+
+            while((str=bufferedReader.readLine())!=null){
+                line++;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+        return line;
+
+    }
+
+
+    public int setFoundedLine(int line, String thread){
+
+
+        int threadNumber = Integer.parseInt(thread.substring(6));
+        int correctLine = 0;
+        for(int i=0 ; i<fileLines.size() && (i+1)<threadNumber; i++){
+            correctLine += fileLines.get(i);
+        }
+        correctLine += line;
+
+        System.out.println(thread + "-" + threadNumber + "-" + correctLine);
+        return correctLine;
+
+
+    }
+
 }
 
