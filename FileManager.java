@@ -1,11 +1,19 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
 
 public class FileManager {
 
+    private ReentrantLock mutex = new ReentrantLock();
+
     private String sourceFileName;
-    private String NewFilesName = "file";
+    private String NewFilesName = "thread";
 
     private String outputFileName = "result";
     private int filesNumber;
@@ -66,11 +74,11 @@ public class FileManager {
 
                 if (index == filesNumber + 1) {
                     int j = index - 1;
-                    try (FileOutputStream out = new FileOutputStream(NewFilesName + "_" + j, true)) {
+                    try (FileOutputStream out = new FileOutputStream(NewFilesName + j, true)) {
                         out.write(buffer, 0, tmp);//tmp is chunk size
                     }
                 } else {
-                    String path = NewFilesName + "_" + index;
+                    String path = NewFilesName + index;
                     File newFile = new File(path);
                     files.add(path);
                     try (FileOutputStream out = new FileOutputStream(newFile)) {
@@ -142,6 +150,20 @@ public class FileManager {
         catch (IOException e) {
 
             System.out.print(e.getMessage());
+        }
+    }
+
+    public void WriteResultToFileWithMutex(String message) {
+        mutex.lock();
+        try {
+            Files.writeString(
+                    Path.of(System.getProperty("user.dir"), outputFileName + ".txt"),
+                    message,
+                    CREATE, APPEND);
+        }catch (Exception e){
+            System.out.println(e);
+        } finally {
+            mutex.unlock();
         }
     }
 }

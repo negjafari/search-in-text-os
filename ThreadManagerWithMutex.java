@@ -3,19 +3,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class ThreadManager implements Runnable {
+public class ThreadManagerWithMutex implements Runnable {
 
     private String[] words;
     private String outputFileName;
     private String threadFileName;
 
-    public ThreadManager(String[] words, String threadFileName , String outputFileName) {
+    public ThreadManagerWithMutex(String[] words, String threadFileName , String outputFileName) {
         this.words = words;
         this.threadFileName = threadFileName;
         this.outputFileName = outputFileName;
     }
 
-    public ThreadManager(String[] words , String outputFileName) {
+    public ThreadManagerWithMutex(String[] words , String outputFileName) {
         this.words = words;
         this.outputFileName = outputFileName;
     }
@@ -44,17 +44,15 @@ public class ThreadManager implements Runnable {
                 fileWords=replace.split(" ");
                 for (String word : fileWords)
                 {
-                   for (String w : this.words) {
-                       if (w.equals(word)){
+                    for (String w : this.words) {
+                        if (w.equals(word)){
 
-                           String message = "in " + Thread.currentThread().getName() + "-" + Thread.currentThread().getId() +
-                                   " ,fileName : " + Thread.currentThread().getName() + " ,find word " + "|"
-                                   + w  + "|" + " in line " + line + " at time " + java.time.LocalTime.now() + "\n";
-                           //System.out.print(message);
-                           //fileManager.writeResultToFile(message);
-                           fileManager.WriteResultToFileWithMutex(message);
-                       }
-                   }
+                            String message = "in " + Thread.currentThread().getName() + "-" + Thread.currentThread().getId() +
+                                    " ,fileName : " + Thread.currentThread().getName() + " ,find word " + "|"
+                                    + w  + "|" + " in line " + line + " at time " + java.time.LocalTime.now() + "\n";
+                            fileManager.WriteResultToFileWithMutex(message);
+                        }
+                    }
 
                 }
             }

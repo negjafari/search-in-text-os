@@ -1,23 +1,28 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.util.concurrent.*;
 
-public class ThreadManager implements Runnable {
+
+public class ThreadManagerWithSemaphore extends Thread {
+
+    Semaphore semaphore;
 
     private String[] words;
     private String outputFileName;
     private String threadFileName;
 
-    public ThreadManager(String[] words, String threadFileName , String outputFileName) {
+    public ThreadManagerWithSemaphore(String[] words, String threadFileName , String outputFileName) {
         this.words = words;
         this.threadFileName = threadFileName;
         this.outputFileName = outputFileName;
     }
 
-    public ThreadManager(String[] words , String outputFileName) {
+    public ThreadManagerWithSemaphore(String[] words , String outputFileName, String threadFileName ,Semaphore semaphore) {
         this.words = words;
         this.outputFileName = outputFileName;
+        this.threadFileName = threadFileName;
+        this.semaphore = semaphore;
     }
 
 
@@ -44,17 +49,18 @@ public class ThreadManager implements Runnable {
                 fileWords=replace.split(" ");
                 for (String word : fileWords)
                 {
-                   for (String w : this.words) {
-                       if (w.equals(word)){
+                    for (String w : this.words) {
+                        if (w.equals(word)){
 
-                           String message = "in " + Thread.currentThread().getName() + "-" + Thread.currentThread().getId() +
-                                   " ,fileName : " + Thread.currentThread().getName() + " ,find word " + "|"
-                                   + w  + "|" + " in line " + line + " at time " + java.time.LocalTime.now() + "\n";
-                           //System.out.print(message);
-                           //fileManager.writeResultToFile(message);
-                           fileManager.WriteResultToFileWithMutex(message);
-                       }
-                   }
+                            String message = "in " + Thread.currentThread().getName() + "-" + Thread.currentThread().getId() +
+                                    " ,fileName : " + Thread.currentThread().getName() + " ,find word " + "|"
+                                    + w  + "|" + " in line " + line + " at time " + java.time.LocalTime.now() + "\n";
+
+                            semaphore.acquire();
+                            fileManager.WriteResultToFileWithMutex(message);
+                            semaphore.release();
+                        }
+                    }
 
                 }
             }
