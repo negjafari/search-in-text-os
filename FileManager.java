@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static java.nio.file.StandardOpenOption.APPEND;
@@ -164,16 +165,18 @@ public class FileManager {
     }
 
     public void WriteResultToFileWithSemaphore(String message) {
+
         try {
+
             FileWriter fWriter = new FileWriter(outputFileName + ".txt", true);
             fWriter.write(message);
             fWriter.close();
         }
 
         catch (IOException e) {
-
             System.out.print(e.getMessage());
         }
+
     }
 
     public int fileLines(String fileName) {

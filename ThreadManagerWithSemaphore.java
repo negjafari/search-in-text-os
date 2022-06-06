@@ -2,16 +2,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.time.LocalTime;
-import java.util.concurrent.*;
+import java.util.concurrent.Semaphore;
 
 
 public class ThreadManagerWithSemaphore extends Thread {
 
-    Semaphore semaphore;
-
     private String[] words;
     private String outputFileName;
     private String threadFileName;
+
+    Semaphore semaphore;
 
     public ThreadManagerWithSemaphore(String[] words, String threadFileName , String outputFileName) {
         this.words = words;
@@ -19,7 +19,7 @@ public class ThreadManagerWithSemaphore extends Thread {
         this.outputFileName = outputFileName;
     }
 
-    public ThreadManagerWithSemaphore(String[] words , String outputFileName ,Semaphore semaphore) {
+    public ThreadManagerWithSemaphore(String[] words , String outputFileName , Semaphore semaphore) {
         this.words = words;
         this.outputFileName = outputFileName;
         this.semaphore = semaphore;

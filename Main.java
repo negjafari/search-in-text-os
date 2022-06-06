@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.*;
+import java.util.concurrent.Semaphore;
 
 
 public class Main {
@@ -17,7 +17,6 @@ public class Main {
 
 
 
-//        System.out.println("Total time: " + (mutex_End - mutex_Start)/1000000000.000000000);
 
         ////one thread
 //        long thread_start = System.nanoTime();
@@ -65,7 +64,7 @@ public class Main {
 
         ////semaphore
         long semaphore_start = System.nanoTime();
-        Semaphore semaphore = new Semaphore(1);
+        Semaphore semaphore = new Semaphore(threads);
         Runnable task = new ThreadManagerWithSemaphore(words, "result.txt", semaphore);
         for(int i=1 ; i<threads ; i++) {
             Thread thread = new Thread(task, "thread" + i);
