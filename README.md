@@ -14,5 +14,5 @@ This project implements a text search engine using multiple threads. The program
   - Timestamp of when the information was written to the output.
 
 ## Usage
-Compile the program by running `Main.java`.
-Sample input files are available in `testcases/` folder.
+- Compile the program by running `Main.java`.
+- sample input files are available in `testcases/` folder.
