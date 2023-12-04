@@ -1,4 +1,4 @@
-# Text Search Engine with Threaded Implementation
+# Threaded Search Engine
 
 ## Overview
 This project implements a text search engine using multiple threads. The program takes as input a text file and a list of words to search for. To parallelize the search process, the program utilizes threads, each responsible for searching an equal portion of the text. To handle potential race conditions, both Mutex locks and semaphores are employed.
