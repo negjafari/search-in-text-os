@@ -1,4 +1,5 @@
 # Threaded Search Engine
+A multithreaded text search engine implemented in Java, preventing race conditions using Mutex Locks and Semaphores
 
 ## Overview
 This project implements a text search engine using multiple threads. The program takes a text file and a list of words to search for as input. To parallelize the search process, the program utilizes threads, each responsible for searching an equal portion of the text. To handle potential race conditions, both Mutex Locks and Semaphores are employed.
